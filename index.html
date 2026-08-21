@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Моя Стартовая Страница</title>
+    <!-- Официальный источник иконок от Google (Google Fonts) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -21,7 +23,7 @@
         }
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 20px;
             max-width: 900px;
             width: 100%;
@@ -29,21 +31,29 @@
         .service-card {
             background-color: #ffffff;
             border-radius: 12px;
-            padding: 20px 15px;
+            padding: 15px;
             text-decoration: none;
             color: #3c4043;
-            text-align: center;
             box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
             transition: all 0.3s cubic-bezier(.25,.8,.25,1);
             display: flex;
             align-items: center;
-            justify-content: center;
-            height: 60px;
+            justify-content: flex-start;
+            height: 50px;
         }
         .service-card:hover {
             box-shadow: 0 14px 28px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.05);
             transform: translateY(-5px);
             color: #1a73e8;
+        }
+        .service-card:hover .material-symbols-outlined {
+            color: #1a73e8;
+        }
+        .material-symbols-outlined {
+            font-size: 28px;
+            margin-right: 12px;
+            color: #5f6368;
+            transition: color 0.3s ease;
         }
         .service-title {
             font-size: 16px;
@@ -56,23 +66,66 @@
     <h1>Рабочая панель</h1>
 
     <div class="grid-container">
-        <!-- 100% официальные ссылки Google -->
-        <a href="https://gemini.google.com/" target="_blank" class="service-card"><span class="service-title">Gemini</span></a>
-        <a href="https://notebooklm.google.com/" target="_blank" class="service-card"><span class="service-title">Gemini Notebook</span></a>
-        <a href="https://mail.google.com/" target="_blank" class="service-card"><span class="service-title">Почта</span></a>
-        <a href="https://calendar.google.com/" target="_blank" class="service-card"><span class="service-title">Календарь</span></a>
-        <!-- Задачи интегрированы в Календарь и Gmail, это официальная прямая ссылка на Задачи в веб-интерфейсе -->
-        <a href="https://calendar.google.com/calendar/u/0/r/tasks" target="_blank" class="service-card"><span class="service-title">Задачи</span></a>
-        <a href="https://keep.google.com/" target="_blank" class="service-card"><span class="service-title">Заметки</span></a>
-        <a href="https://drive.google.com/" target="_blank" class="service-card"><span class="service-title">Диск</span></a>
-        <a href="https://docs.google.com/" target="_blank" class="service-card"><span class="service-title">Документы</span></a>
-        <a href="https://docs.google.com/spreadsheets/" target="_blank" class="service-card"><span class="service-title">Таблицы</span></a>
-        <a href="https://docs.google.com/presentation/" target="_blank" class="service-card"><span class="service-title">Презентации</span></a>
-        <a href="https://docs.google.com/forms/" target="_blank" class="service-card"><span class="service-title">Формы</span></a>
-        <a href="https://photos.google.com/" target="_blank" class="service-card"><span class="service-title">Фото</span></a>
-        <a href="https://translate.google.com/" target="_blank" class="service-card"><span class="service-title">Переводчик</span></a>
-        <a href="https://meet.google.com/" target="_blank" class="service-card"><span class="service-title">Meet</span></a>
-        <a href="https://chat.google.com/" target="_blank" class="service-card"><span class="service-title">Чат</span></a>
+        <a href="https://gemini.google.com/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">auto_awesome</span>
+            <span class="service-title">Gemini</span>
+        </a>
+        <a href="https://notebooklm.google.com/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">menu_book</span>
+            <span class="service-title">Gemini Notebook</span>
+        </a>
+        <a href="https://mail.google.com/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">mail</span>
+            <span class="service-title">Почта</span>
+        </a>
+        <a href="https://calendar.google.com/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">calendar_month</span>
+            <span class="service-title">Календарь</span>
+        </a>
+        <a href="https://calendar.google.com/calendar/u/0/r/tasks" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">task_alt</span>
+            <span class="service-title">Задачи</span>
+        </a>
+        <a href="https://keep.google.com/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">lightbulb</span>
+            <span class="service-title">Заметки</span>
+        </a>
+        <a href="https://drive.google.com/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">cloud</span>
+            <span class="service-title">Диск</span>
+        </a>
+        <a href="https://docs.google.com/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">description</span>
+            <span class="service-title">Документы</span>
+        </a>
+        <a href="https://docs.google.com/spreadsheets/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">table_view</span>
+            <span class="service-title">Таблицы</span>
+        </a>
+        <a href="https://docs.google.com/presentation/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">slideshow</span>
+            <span class="service-title">Презентации</span>
+        </a>
+        <a href="https://docs.google.com/forms/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">format_list_bulleted</span>
+            <span class="service-title">Формы</span>
+        </a>
+        <a href="https://photos.google.com/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">photo</span>
+            <span class="service-title">Фото</span>
+        </a>
+        <a href="https://translate.google.com/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">translate</span>
+            <span class="service-title">Переводчик</span>
+        </a>
+        <a href="https://meet.google.com/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">videocam</span>
+            <span class="service-title">Meet</span>
+        </a>
+        <a href="https://chat.google.com/" target="_blank" class="service-card">
+            <span class="material-symbols-outlined">chat</span>
+            <span class="service-title">Чат</span>
+        </a>
     </div>
 
 </body>
