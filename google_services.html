@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Services - Стартовая страница</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121316;
+            color: #e3e2e6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-image 0.5s ease-in-out, background-color 0.3s;
+        }
+
+        /* Isometric Hexagon Pattern background inspired by reference */
+        .bg-pattern-hex {
+            background-color: #1a1a1e;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 80%),
+                linear-gradient(30deg, #131418 12%, transparent 12.5%, transparent 87%, #131418 87.5%, #131418),
+                linear-gradient(150deg, #131418 12%, transparent 12.5%, transparent 87%, #131418 87.5%, #131418),
+                linear-gradient(30deg, #131418 12%, transparent 12.5%, transparent 87%, #131418 87.5%, #131418),
+                linear-gradient(150deg, #131418 12%, transparent 12.5%, transparent 87%, #131418 87.5%, #131418),
+                linear-gradient(60deg, #1d1e24 25%, transparent 25.5%, transparent 75%, #1d1e24 75%, #1d1e24),
+                linear-gradient(60deg, #1d1e24 25%, transparent 25.5%, transparent 75%, #1d1e24 75%, #1d1e24);
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+        }
+
+        .bg-pattern-warm {
+            background: radial-gradient(circle at top left, rgba(217, 119, 6, 0.15), transparent 50%),
+                        radial-gradient(circle at bottom right, rgba(180, 83, 9, 0.15), transparent 50%),
+                        #171614;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.09);
+            border-color: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+        }
+
+        .glass-input {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .glass-input:focus-within {
+            border-color: rgba(168, 85, 247, 0.6);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.25);
+        }
+
+        /* Icon squircle shape */
+        .squircle {
+            border-radius: 22%;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.4);
+        }
+    </style>
+</head>
+<body id="mainBody" class="bg-pattern-hex min-h-screen flex flex-col justify-between p-4 sm:p-6 lg:p-8 select-none">
+
+    <header class="w-full max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+        <!-- Date & Time -->
+        <div class="flex items-center gap-3 glass-card px-4 py-2.5 rounded-2xl">
+            <span id="clockTime" class="text-2xl font-bold tracking-tight text-white">00:00</span>
+            <span class="text-xs text-gray-400 border-l border-white/10 pl-3 leading-tight" id="clockDate">--</span>
+        </div>
+
+        <!-- Search Bar with Mode Toggle -->
+        <div class="w-full sm:w-auto flex-1 max-w-xl">
+            <form onsubmit="handleSearch(event)" class="relative glass-input rounded-full flex items-center px-4 py-2 transition-all">
+                <!-- Search Provider Tag -->
+                <button type="button" onclick="toggleSearchMode()" id="searchModeBadge" class="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-purple-600/40 text-purple-200 border border-purple-500/30 hover:bg-purple-600/60 transition">
+                    <i class="fa-solid fa-sparkles text-xs" id="searchModeIcon"></i>
+                    <span id="searchModeText">Gemini AI</span>
+                </button>
+
+                <input type="text" id="searchInput" placeholder="Сформируй краткий эффективный план..." class="w-full bg-transparent px-3 py-1 text-sm text-white placeholder-gray-400 focus:outline-none">
+                
+                <button type="submit" title="Искать" class="p-2 text-gray-300 hover:text-white transition">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="flex items-center gap-2">
+            <button onclick="openWallpaperModal()" title="Сгенерировать AI-обои" class="p-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 text-white transition">
+                <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
+            </button>
+            <button onclick="toggleTheme()" title="Сменить тему" class="p-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 text-white transition">
+                <i class="fa-solid fa-palette text-sm"></i>
+            </button>
+            <button onclick="openAddModal()" title="Добавить сервис" class="p-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 text-white transition">
+                <i class="fa-solid fa-plus text-sm"></i>
+            </button>
+            <button onclick="resetDefaults()" title="Сбросить по умолчанию" class="p-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 text-white transition">
+                <i class="fa-solid fa-rotate-right text-sm"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="w-full max-w-6xl mx-auto my-auto py-4">
+        <!-- App Grid -->
+        <div id="servicesGrid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-6 gap-4 sm:gap-6 lg:gap-8 justify-items-center">
+            <!-- Services injected dynamically by JavaScript -->
+        </div>
+    </main>
+
+    <div id="aiModal" class="fixed inset-0 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="glass-card bg-gray-900/90 max-w-2xl w-full rounded-3xl p-6 border border-white/10 shadow-2xl relative flex flex-col max-h-[85vh]">
+            <div class="flex justify-between items-center pb-4 border-b border-white/10">
+                <div class="flex items-center gap-2 text-purple-400 font-semibold">
+                    <i class="fa-solid fa-sparkles"></i>
+                    <span>Ответ Gemini AI</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="speakAiResponse()" id="ttsBtn" title="Озвучить" class="p-2 rounded-full hover:bg-white/10 text-gray-300 hover:text-white transition">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                    <button onclick="closeAiModal()" class="p-2 rounded-full hover:bg-white/10 text-gray-300 hover:text-white transition">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="aiContent" class="py-4 text-sm leading-relaxed text-gray-200 overflow-y-auto flex-1 whitespace-pre-line">
+                <div class="flex items-center justify-center py-12 text-purple-400 gap-3">
+                    <i class="fa-solid fa-circle-notch fa-spin text-2xl"></i>
+                    <span>Генерирую ответ...</span>
+                </div>
+            </div>
+
+            <!-- Citations / Sources -->
+            <div id="aiSources" class="pt-3 border-t border-white/10 text-xs text-gray-400 hidden">
+                <span class="font-semibold text-gray-300">Источники:</span>
+                <div id="aiSourcesList" class="flex flex-wrap gap-2 mt-1"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="wallpaperModal" class="fixed inset-0 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="glass-card bg-gray-900/90 max-w-lg w-full rounded-3xl p-6 border border-white/10 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-purple-400"></i> Сгенерировать AI Обои
+                </h3>
+                <button onclick="closeWallpaperModal()" class="text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <p class="text-xs text-gray-400 mb-4">Опишите картинку или стиль, который вы хотите установить на задний фон.</p>
+            
+            <input type="text" id="wallpaperPrompt" placeholder="Например: осенние золотые листья, абстрактный изометрический рисунок 8k..." class="w-full glass-input rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 mb-4 focus:outline-none">
+
+            <div class="flex justify-end gap-3">
+                <button onclick="closeWallpaperModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-300 hover:bg-white/10 transition">Отмена</button>
+                <button onclick="generateWallpaper()" id="genWallBtn" class="px-5 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white transition shadow-lg flex items-center gap-2">
+                    <span>Создать</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="addModal" class="fixed inset-0 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 z-50">
+        <div class="glass-card bg-gray-900/90 max-w-md w-full rounded-3xl p-6 border border-white/10 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-white">Добавить свой сервис</h3>
+                <button onclick="closeAddModal()" class="text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-3 mb-5">
+                <div>
+                    <label class="text-xs text-gray-400 mb-1 block">Название сервиса</label>
+                    <input type="text" id="newServiceName" placeholder="Например: Google Drive" class="w-full glass-input rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-400 mb-1 block">URL ссылка</label>
+                    <input type="url" id="newServiceUrl" placeholder="https://..." class="w-full glass-input rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-400 mb-1 block">Иконка FontAwesome (классы)</label>
+                    <input type="text" id="newServiceIcon" placeholder="fa-brands fa-google" class="w-full glass-input rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none">
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3">
+                <button onclick="closeAddModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-300 hover:bg-white/10 transition">Отмена</button>
+                <button onclick="saveNewService()" class="px-5 py-2 rounded-xl text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white transition">Добавить</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="w-full max-w-7xl mx-auto text-center py-4 text-xs text-gray-500">
+        Быстрый доступ к сервисам Google & Gemini AI • Нажмите на любой сервис для перехода
+    </footer>
+
+    <script>
+        // Default 22 Google Services list matching the reference image exactly
+        const defaultServices = [
+            { id: 'google', name: 'Google', url: 'https://www.google.com', svg: '<svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>' },
+            { id: 'gmail', name: 'Почта', url: 'https://mail.google.com', icon: 'fa-solid fa-envelope text-red-500' },
+            { id: 'calendar', name: 'Календарь', url: 'https://calendar.google.com', icon: 'fa-solid fa-calendar-days text-blue-500' },
+            { id: 'tasks', name: 'Задачи', url: 'https://tasks.google.com', icon: 'fa-solid fa-circle-check text-blue-400' },
+            { id: 'keep', name: 'Заметки', url: 'https://keep.google.com', icon: 'fa-solid fa-lightbulb text-yellow-400' },
+            { id: 'drive', name: 'Диск', url: 'https://drive.google.com', icon: 'fa-solid fa-hard-drive text-green-500' },
+            
+            { id: 'sites', name: 'Сайты', url: 'https://sites.google.com', icon: 'fa-solid fa-laptop text-blue-400' },
+            { id: 'docs', name: 'Документы', url: 'https://docs.google.com', icon: 'fa-solid fa-file-lines text-blue-500' },
+            { id: 'sheets', name: 'Таблицы', url: 'https://sheets.google.com', icon: 'fa-solid fa-table-cells text-emerald-500' },
+            { id: 'slides', name: 'Презентация', url: 'https://slides.google.com', icon: 'fa-solid fa-file-powerpoint text-amber-500' },
+            { id: 'forms', name: 'Формы', url: 'https://forms.google.com', icon: 'fa-solid fa-list-check text-purple-500' },
+            { id: 'messages', name: 'Сообщения', url: 'https://messages.google.com', icon: 'fa-solid fa-comment-dots text-blue-500' },
+            
+            { id: 'photos', name: 'Фото', url: 'https://photos.google.com', icon: 'fa-solid fa-image text-amber-400' },
+            { id: 'notebook', name: 'Gemini Notebook', url: 'https://notebooklm.google.com', icon: 'fa-solid fa-brain text-cyan-400' },
+            { id: 'script', name: 'Редактор', url: 'https://script.google.com', icon: 'fa-solid fa-code text-purple-400' },
+            { id: 'maps', name: 'Карты', url: 'https://maps.google.com', icon: 'fa-solid fa-location-dot text-red-500' },
+            { id: 'youtube', name: 'YouTube', url: 'https://www.youtube.com', icon: 'fa-brands fa-youtube text-red-600' },
+            { id: 'music', name: 'Музыка', url: 'https://music.youtube.com', icon: 'fa-solid fa-circle-play text-red-500' },
+            
+            { id: 'translate', name: 'Переводчик', url: 'https://translate.google.com', icon: 'fa-solid fa-language text-blue-400' },
+            { id: 'scripts_alt', name: 'Скрипты', url: 'https://script.google.com', icon: 'fa-solid fa-gears text-indigo-400' },
+            { id: 'meet', name: 'Meet', url: 'https://meet.google.com', icon: 'fa-solid fa-video text-emerald-400' },
+            { id: 'chat', name: 'Чат', url: 'https://chat.google.com', icon: 'fa-solid fa-comments text-emerald-500' }
+        ];
+
+        let services = [];
+        let isGeminiSearch = true;
+        let lastAiText = '';
+
+        window.onload = function() {
+            loadServices();
+            updateClock();
+            setInterval(updateClock, 1000);
+            applySavedTheme();
+        };
+
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('clockTime').textContent = `${hours}:${minutes}`;
+
+            const options = { weekday: 'short', day: 'numeric', month: 'short' };
+            document.getElementById('clockDate').textContent = now.toLocaleDateString('ru-RU', options);
+        }
+
+        function loadServices() {
+            const saved = localStorage.getItem('google_services_custom');
+            services = saved ? JSON.parse(saved) : defaultServices;
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('servicesGrid');
+            grid.innerHTML = '';
+
+            services.forEach((svc, index) => {
+                const item = document.createElement('a');
+                item.href = svc.url;
+                item.target = "_blank";
+                item.className = "group flex flex-col items-center justify-center p-3 sm:p-4 glass-card rounded-3xl transition-all duration-300 hover:-translate-y-1.5 w-full aspect-square relative";
+
+                let iconHtml = '';
+                if (svc.svg) {
+                    iconHtml = `<div class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">${svc.svg}</div>`;
+                } else {
+                    iconHtml = `<div class="w-10 h-10 sm:w-12 sm:h-12 squircle bg-white/10 flex items-center justify-center text-xl sm:text-2xl group-hover:scale-110 transition-transform">
+                                    <i class="${svc.icon || 'fa-solid fa-globe text-gray-300'}"></i>
+                                </div>`;
+                }
+
+                item.innerHTML = `
+                    <div class="p-2 sm:p-3 bg-white/90 shadow-lg squircle flex items-center justify-center mb-2 sm:mb-3 group-hover:bg-white transition-colors">
+                        ${svc.svg ? svc.svg : `<i class="${svc.icon} text-2xl sm:text-3xl"></i>`}
+                    </div>
+                    <span class="text-xs font-medium text-gray-200 group-hover:text-white text-center truncate w-full px-1">
+                        ${svc.name}
+                    </span>
+                    <button onclick="deleteService(event, ${index})" class="absolute top-2 right-2 text-xs text-gray-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity p-1">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                `;
+
+                grid.appendChild(item);
+            });
+        }
+
+        function toggleSearchMode() {
+            isGeminiSearch = !isGeminiSearch;
+            const badge = document.getElementById('searchModeBadge');
+            const icon = document.getElementById('searchModeIcon');
+            const text = document.getElementById('searchModeText');
+            const input = document.getElementById('searchInput');
+
+            if (isGeminiSearch) {
+                badge.className = "flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-purple-600/40 text-purple-200 border border-purple-500/30 hover:bg-purple-600/60 transition";
+                icon.className = "fa-solid fa-sparkles text-xs";
+                text.textContent = "Gemini AI";
+                input.placeholder = "Сформируй краткий эффективный план...";
+            } else {
+                badge.className = "flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-600/40 text-blue-200 border border-blue-500/30 hover:bg-blue-600/60 transition";
+                icon.className = "fa-brands fa-google text-xs";
+                text.textContent = "Google";
+                input.placeholder = "Поиск в Google...";
+            }
+        }
+
+        async function handleSearch(e) {
+            e.preventDefault();
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) return;
+
+            if (!isGeminiSearch) {
+                window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+                return;
+            }
+
+            // Open AI Modal
+            document.getElementById('aiModal').classList.remove('hidden');
+            document.getElementById('aiContent').innerHTML = `
+                <div class="flex items-center justify-center py-12 text-purple-400 gap-3">
+                    <i class="fa-solid fa-circle-notch fa-spin text-2xl"></i>
+                    <span>Ищу ответ в Gemini AI с поиском в Сети...</span>
+                </div>`;
+            document.getElementById('aiSources').classList.add('hidden');
+
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: query }] }],
+                    tools: [{ "google_search": {} }],
+                    systemInstruction: {
+                        parts: [{ text: "Вы являетесь умным помощником стартовой страницы. Дайте краткий, содержательный и четко структурированный ответ на русском языке." }]
+                    }
+                };
+
+                const res = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+                const candidate = data.candidates?.[0];
+                const text = candidate?.content?.parts?.[0]?.text || "Извините, не удалось получить ответ.";
+                
+                lastAiText = text;
+                document.getElementById('aiContent').textContent = text;
+
+                // Process citations / grounding
+                const sources = candidate?.groundingMetadata?.groundingAttributions || [];
+                if (sources.length > 0) {
+                    const sourcesContainer = document.getElementById('aiSourcesList');
+                    sourcesContainer.innerHTML = '';
+                    sources.forEach(s => {
+                        if (s.web?.uri && s.web?.title) {
+                            const link = document.createElement('a');
+                            link.href = s.web.uri;
+                            link.target = "_blank";
+                            link.className = "px-2 py-1 bg-white/10 hover:bg-white/20 rounded-md text-purple-300 hover:text-white transition truncate max-w-xs";
+                            link.textContent = s.web.title;
+                            sourcesContainer.appendChild(link);
+                        }
+                    });
+                    if (sourcesContainer.children.length > 0) {
+                        document.getElementById('aiSources').classList.remove('hidden');
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+                document.getElementById('aiContent').textContent = "Произошла ошибка при выполнении запроса к Gemini AI.";
+            }
+        }
+
+        function closeAiModal() {
+            document.getElementById('aiModal').classList.add('hidden');
+        }
+
+        async function speakAiResponse() {
+            if (!lastAiText) return;
+
+            const ttsBtn = document.getElementById('ttsBtn');
+            ttsBtn.classList.add('text-purple-400', 'animate-pulse');
+
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{
+                        parts: [{ text: "Прочти четко: " + lastAiText.substring(0, 400) }]
+                    }],
+                    generationConfig: {
+                        responseModalities: ["AUDIO"],
+                        speechConfig: {
+                            voiceConfig: {
+                                prebuiltVoiceConfig: { voiceName: "Kore" }
+                            }
+                        }
+                    }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+
+                if (audioData) {
+                    const audio = new Audio("data:audio/wav;base64," + audioData);
+                    audio.play();
+                }
+            } catch (e) {
+                console.error("TTS error:", e);
+            } finally {
+                ttsBtn.classList.remove('text-purple-400', 'animate-pulse');
+            }
+        }
+
+        function openWallpaperModal() {
+            document.getElementById('wallpaperModal').classList.remove('hidden');
+        }
+
+        function closeWallpaperModal() {
+            document.getElementById('wallpaperModal').classList.add('hidden');
+        }
+
+        async function generateWallpaper() {
+            const prompt = document.getElementById('wallpaperPrompt').value.trim();
+            if (!prompt) return;
+
+            const btn = document.getElementById('genWallBtn');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Создание...`;
+
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{
+                        role: 'user',
+                        parts: [{ text: `High quality desktop background wallpaper: ${prompt}` }]
+                    }],
+                    generationConfig: {
+                        responseModalities: ['IMAGE'],
+                        imageConfig: { aspectRatio: "16:9" }
+                    }
+                };
+
+                const res = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+                const base64 = data?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+
+                if (base64) {
+                    const imgUrl = `data:image/png;base64,${base64}`;
+                    document.body.style.backgroundImage = `url('${imgUrl}')`;
+                    document.body.style.backgroundSize = 'cover';
+                    document.body.style.backgroundPosition = 'center';
+                    localStorage.setItem('custom_wallpaper', imgUrl);
+                    closeWallpaperModal();
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span>Создать</span>`;
+            }
+        }
+
+        function openAddModal() {
+            document.getElementById('addModal').classList.remove('hidden');
+        }
+
+        function closeAddModal() {
+            document.getElementById('addModal').classList.add('hidden');
+        }
+
+        function saveNewService() {
+            const name = document.getElementById('newServiceName').value.trim();
+            const url = document.getElementById('newServiceUrl').value.trim();
+            const icon = document.getElementById('newServiceIcon').value.trim() || 'fa-solid fa-link text-purple-400';
+
+            if (!name || !url) return;
+
+            services.push({ id: Date.now().toString(), name, url, icon });
+            localStorage.setItem('google_services_custom', JSON.stringify(services));
+            renderGrid();
+            closeAddModal();
+
+            document.getElementById('newServiceName').value = '';
+            document.getElementById('newServiceUrl').value = '';
+        }
+
+        function deleteService(e, index) {
+            e.preventDefault();
+            e.stopPropagation();
+            services.splice(index, 1);
+            localStorage.setItem('google_services_custom', JSON.stringify(services));
+            renderGrid();
+        }
+
+        function resetDefaults() {
+            services = [...defaultServices];
+            localStorage.removeItem('google_services_custom');
+            localStorage.removeItem('custom_wallpaper');
+            document.body.style.backgroundImage = '';
+            document.body.className = "bg-pattern-hex min-h-screen flex flex-col justify-between p-4 sm:p-6 lg:p-8 select-none";
+            renderGrid();
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            if (body.classList.contains('bg-pattern-hex')) {
+                body.className = "bg-pattern-warm min-h-screen flex flex-col justify-between p-4 sm:p-6 lg:p-8 select-none";
+                localStorage.setItem('theme_bg', 'warm');
+            } else {
+                body.className = "bg-pattern-hex min-h-screen flex flex-col justify-between p-4 sm:p-6 lg:p-8 select-none";
+                localStorage.setItem('theme_bg', 'hex');
+            }
+        }
+
+        function applySavedTheme() {
+            const savedWall = localStorage.getItem('custom_wallpaper');
+            if (savedWall) {
+                document.body.style.backgroundImage = `url('${savedWall}')`;
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center';
+            } else {
+                const bg = localStorage.getItem('theme_bg');
+                if (bg === 'warm') {
+                    document.body.className = "bg-pattern-warm min-h-screen flex flex-col justify-between p-4 sm:p-6 lg:p-8 select-none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
