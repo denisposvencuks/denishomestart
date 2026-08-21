@@ -12,13 +12,12 @@
             min-height: 100vh;
             margin: 0;
             padding: 40px 20px;
-            box-sizing: border-box; /* Включает padding в общую высоту 100vh, убирая скролл */
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            align-items: center;    /* Выравнивание по горизонтали */
-            justify-content: center; /* Выравнивание по вертикали */
+            align-items: center;    
+            justify-content: center; 
             position: relative;
-            /* Чтобы размытый фон не вызывал появление полос прокрутки */
             overflow-x: hidden; 
         }
 
@@ -31,7 +30,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            filter: blur(10px); /* Эффект размытости */
+            filter: blur(10px); 
             z-index: -2;
         }
 
@@ -40,17 +39,16 @@
             content: "";
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.25); /* Затемнение на 25% */
-            background-image: linear-gradient(to top, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.05)); /* Белая туманность */
+            background-color: rgba(0, 0, 0, 0.25); 
+            background-image: linear-gradient(to top, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.05)); 
             z-index: -1;
-            pointer-events: none; /* Чтобы слой не мешал кликать по карточкам */
+            pointer-events: none; 
         }
 
         h1 {
             color: #202124;
             margin-bottom: 40px;
             font-weight: 500;
-            /* Добавил подложку для текста, чтобы он легко читался на любом фоне */
             background: rgba(255, 255, 255, 0.7);
             padding: 10px 30px;
             border-radius: 20px;
@@ -60,29 +58,38 @@
         }
 
         .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 15px; 
             max-width: 900px;
             width: 100%;
-            z-index: 1; /* Чтобы карточки были поверх фона */
-            padding: 10px 0px 10px 0px;
+            z-index: 1; 
+            padding: 10px 0;
         }
 
         .service-card {
-            background-color: rgba(255, 255, 255, 0.9); /* Сделал карточки слегка прозрачными */
+            background-color: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             border-radius: 12px;
-            padding: 15px;
+            padding: 10px;
             text-decoration: none;
             color: #3c4043;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            
             display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            height: 50px;
-            border-left: 5px solid var(--brand-color, #1a73e8);
+            flex-direction: column; 
+            align-items: center;    
+            justify-content: center;
+            
+            /* СТРОГО ФИКСИРОВАННЫЕ РАЗМЕРЫ 110x100 */
+            width: 110px;
+            height: 100px;
+            box-sizing: border-box; 
+            
+            border-left: 4px solid var(--brand-color, #1a73e8);
+            text-align: center;
         }
 
         .service-card:hover {
@@ -96,8 +103,9 @@
         }
 
         .material-symbols-outlined {
-            font-size: 28px;
-            margin-right: 12px;
+            font-size: 30px;
+            margin-right: 0; 
+            margin-bottom: 8px;
             color: var(--brand-color, #5f6368);
             transition: transform 0.3s ease;
         }
@@ -107,8 +115,9 @@
         }
 
         .service-title {
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 500;
+            line-height: 1.2; 
             transition: color 0.3s ease;
         }
     </style>
@@ -127,8 +136,6 @@
             <span class="material-symbols-outlined">calendar_check</span>
             <span class="service-title">TA4</span>
         </a>
-    </div>
-    <div class="grid-container">
         <a href="https://gemini.google.com/" target="_blank" class="service-card" style="--brand-color: #8e24aa;">
             <span class="material-symbols-outlined">auto_awesome</span>
             <span class="service-title">Gemini</span>
@@ -190,5 +197,5 @@
             <span class="service-title">Чат</span>
         </a>
     </div>
-    </body>
+</body>
 </html>
