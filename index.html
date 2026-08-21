@@ -9,7 +9,9 @@
     <style>
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f0f2f5;
+            /* Сделал фон чуть более мягким с легким градиентом */
+            background: linear-gradient(135deg, #f0f2f5 0%, #e2e8f0 100%);
+            min-height: 100vh;
             margin: 0;
             padding: 40px 20px;
             display: flex;
@@ -19,7 +21,8 @@
         h1 {
             color: #202124;
             margin-bottom: 40px;
-            font-weight: 400;
+            font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
         }
         .grid-container {
             display: grid;
@@ -34,30 +37,37 @@
             padding: 15px;
             text-decoration: none;
             color: #3c4043;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
             transition: all 0.3s cubic-bezier(.25,.8,.25,1);
             display: flex;
             align-items: center;
             justify-content: flex-start;
             height: 50px;
+            /* Добавлена цветная полоска слева на основе переменной */
+            border-left: 5px solid var(--brand-color, #1a73e8);
         }
         .service-card:hover {
-            box-shadow: 0 14px 28px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.05);
+            /* Цветная тень при наведении */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 4px 8px var(--brand-color);
             transform: translateY(-5px);
-            color: #1a73e8;
         }
-        .service-card:hover .material-symbols-outlined {
-            color: #1a73e8;
+        .service-card:hover .service-title {
+            color: var(--brand-color, #1a73e8);
         }
         .material-symbols-outlined {
             font-size: 28px;
             margin-right: 12px;
-            color: #5f6368;
-            transition: color 0.3s ease;
+            /* Иконки теперь используют уникальный цвет сервиса */
+            color: var(--brand-color, #5f6368);
+            transition: transform 0.3s ease;
+        }
+        .service-card:hover .material-symbols-outlined {
+            transform: scale(1.15);
         }
         .service-title {
             font-size: 16px;
             font-weight: 500;
+            transition: color 0.3s ease;
         }
     </style>
 </head>
@@ -66,63 +76,63 @@
     <h1>Рабочая панель</h1>
 
     <div class="grid-container">
-        <a href="https://gemini.google.com/" target="_blank" class="service-card">
+        <a href="https://gemini.google.com/" target="_blank" class="service-card" style="--brand-color: #8e24aa;">
             <span class="material-symbols-outlined">auto_awesome</span>
             <span class="service-title">Gemini</span>
         </a>
-        <a href="https://notebooklm.google.com/" target="_blank" class="service-card">
+        <a href="https://notebooklm.google.com/" target="_blank" class="service-card" style="--brand-color: #3949ab;">
             <span class="material-symbols-outlined">menu_book</span>
             <span class="service-title">Gemini Notebook</span>
         </a>
-        <a href="https://mail.google.com/" target="_blank" class="service-card">
+        <a href="https://mail.google.com/" target="_blank" class="service-card" style="--brand-color: #ea4335;">
             <span class="material-symbols-outlined">mail</span>
             <span class="service-title">Почта</span>
         </a>
-        <a href="https://calendar.google.com/" target="_blank" class="service-card">
+        <a href="https://calendar.google.com/" target="_blank" class="service-card" style="--brand-color: #4285f4;">
             <span class="material-symbols-outlined">calendar_month</span>
             <span class="service-title">Календарь</span>
         </a>
-        <a href="https://calendar.google.com/calendar/u/0/r/tasks" target="_blank" class="service-card">
+        <a href="https://calendar.google.com/calendar/u/0/r/tasks" target="_blank" class="service-card" style="--brand-color: #4285f4;">
             <span class="material-symbols-outlined">task_alt</span>
             <span class="service-title">Задачи</span>
         </a>
-        <a href="https://keep.google.com/" target="_blank" class="service-card">
+        <a href="https://keep.google.com/" target="_blank" class="service-card" style="--brand-color: #f9ab00;">
             <span class="material-symbols-outlined">lightbulb</span>
             <span class="service-title">Заметки</span>
         </a>
-        <a href="https://drive.google.com/" target="_blank" class="service-card">
+        <a href="https://drive.google.com/" target="_blank" class="service-card" style="--brand-color: #34a853;">
             <span class="material-symbols-outlined">cloud</span>
             <span class="service-title">Диск</span>
         </a>
-        <a href="https://docs.google.com/" target="_blank" class="service-card">
+        <a href="https://docs.google.com/" target="_blank" class="service-card" style="--brand-color: #4285f4;">
             <span class="material-symbols-outlined">description</span>
             <span class="service-title">Документы</span>
         </a>
-        <a href="https://docs.google.com/spreadsheets/" target="_blank" class="service-card">
+        <a href="https://docs.google.com/spreadsheets/" target="_blank" class="service-card" style="--brand-color: #0f9d58;">
             <span class="material-symbols-outlined">table_view</span>
             <span class="service-title">Таблицы</span>
         </a>
-        <a href="https://docs.google.com/presentation/" target="_blank" class="service-card">
+        <a href="https://docs.google.com/presentation/" target="_blank" class="service-card" style="--brand-color: #f4b400;">
             <span class="material-symbols-outlined">slideshow</span>
             <span class="service-title">Презентации</span>
         </a>
-        <a href="https://docs.google.com/forms/" target="_blank" class="service-card">
+        <a href="https://docs.google.com/forms/" target="_blank" class="service-card" style="--brand-color: #7248b9;">
             <span class="material-symbols-outlined">format_list_bulleted</span>
             <span class="service-title">Формы</span>
         </a>
-        <a href="https://photos.google.com/" target="_blank" class="service-card">
+        <a href="https://photos.google.com/" target="_blank" class="service-card" style="--brand-color: #ff0055;">
             <span class="material-symbols-outlined">photo</span>
             <span class="service-title">Фото</span>
         </a>
-        <a href="https://translate.google.com/" target="_blank" class="service-card">
+        <a href="https://translate.google.com/" target="_blank" class="service-card" style="--brand-color: #4285f4;">
             <span class="material-symbols-outlined">translate</span>
             <span class="service-title">Переводчик</span>
         </a>
-        <a href="https://meet.google.com/" target="_blank" class="service-card">
+        <a href="https://meet.google.com/" target="_blank" class="service-card" style="--brand-color: #00897b;">
             <span class="material-symbols-outlined">videocam</span>
             <span class="service-title">Meet</span>
         </a>
-        <a href="https://chat.google.com/" target="_blank" class="service-card">
+        <a href="https://chat.google.com/" target="_blank" class="service-card" style="--brand-color: #00897b;">
             <span class="material-symbols-outlined">chat</span>
             <span class="service-title">Чат</span>
         </a>
