@@ -12,9 +12,11 @@
             min-height: 100vh;
             margin: 0;
             padding: 40px 20px;
+            box-sizing: border-box; /* Включает padding в общую высоту 100vh, убирая скролл */
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center;    /* Выравнивание по горизонтали */
+            justify-content: center; /* Выравнивание по вертикали */
             position: relative;
             /* Чтобы размытый фон не вызывал появление полос прокрутки */
             overflow-x: hidden; 
@@ -173,6 +175,5 @@
             <span class="service-title">Чат</span>
         </a>
     </div>
-
 </body>
 </html>
