@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Моя Стартовая Страница</title>
-    <!-- Официальный источник иконок от Google (Google Fonts) -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- Подключение Google Fonts: Exo 2 и иконки Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,300..800;1,300..800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
+    
     <style>
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Exo 2', sans-serif;
             min-height: 100vh;
             margin: 0;
             padding: 40px 20px;
@@ -43,6 +46,37 @@
             background-image: linear-gradient(to top, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.05)); 
             z-index: -1;
             pointer-events: none; 
+        }
+
+        /* Блок 24-часовых часов и даты (без фона, белый шрифт Exo 2) */
+        .clock-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            z-index: 1;
+            user-select: none;
+        }
+
+        .clock-time {
+            font-size: 88px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 3px;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .clock-date {
+            font-size: 20px;
+            font-weight: 400;
+            color: #f1f3f4;
+            margin-top: 10px;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         /* Блок поисковой строки */
@@ -90,7 +124,8 @@
             font-size: 16px;
             color: #202124;
             padding: 10px 12px;
-            font-family: inherit;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 500;
         }
 
         .search-btn, .ai-toggle-btn {
@@ -157,7 +192,7 @@
             display: flex;
             flex-direction: column; 
             align-items: center;    
-            justify-content: center;
+            justify-content: center; 
             
             /* СТРОГО ФИКСИРОВАННЫЕ РАЗМЕРЫ 110x100 */
             width: 110px;
@@ -199,11 +234,18 @@
             font-size: 13px;
             font-weight: 500;
             line-height: 1.2; 
+            font-family: 'Exo 2', sans-serif;
             transition: color 0.3s ease;
         }
     </style>
 </head>
 <body>
+
+    <!-- Блок 24-часового времени и даты -->
+    <div class="clock-container">
+        <div id="clockTime" class="clock-time">00:00</div>
+        <div id="clockDate" class="clock-date">Понедельник, 1 января</div>
+    </div>
 
     <!-- Поисковая строка -->
     <div class="search-container">
@@ -213,7 +255,7 @@
             </button>
             <input type="text" name="q" id="searchInput" class="search-input" placeholder="Поиск в Google..." autofocus autocomplete="off" required>
             
-            <!-- Точные параметры для Режима ИИ из вашей ссылки -->
+            <!-- Точные параметры для Режима ИИ (udm=50) -->
             <input type="hidden" name="udm" id="udmParam" value="50" disabled>
             <input type="hidden" name="aep" id="aepParam" value="1" disabled>
             <input type="hidden" name="ntc" id="ntcParam" value="1" disabled>
@@ -338,8 +380,23 @@
         </a>
     </div>
 
-    <!-- Скрипт переключения режима поиска -->
+    <!-- Скрипты часов и переключения поиска -->
     <script>
+        // Обновление 24-часового времени и даты
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('clockTime').textContent = `${hours}:${minutes}`;
+
+            const options = { weekday: 'long', day: 'numeric', month: 'long' };
+            document.getElementById('clockDate').textContent = now.toLocaleDateString('ru-RU', options);
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Переключение режимов поиска
         let isAIMode = false;
 
         function toggleAIMode() {
@@ -357,7 +414,7 @@
                 searchBox.classList.add('ai-mode');
                 input.placeholder = 'Поиск в Режиме ИИ Google...';
                 
-                // Активируем параметры точного Режима ИИ (udm=50)
+                // Активируем параметры Режима ИИ (udm=50)
                 udmParam.disabled = false;
                 aepParam.disabled = false;
                 ntcParam.disabled = false;
