@@ -159,10 +159,18 @@
             color: #8e24aa;
         }
 
+        .ai-toggle-btn:hover .material-symbols-outlined {
+            color: #8e24aa;
+        }
+
         .ai-toggle-btn.active {
             background: linear-gradient(135deg, #8e24aa, #1a73e8);
-            color: #ffffff;
             box-shadow: 0 2px 6px rgba(142, 36, 170, 0.4);
+        }
+
+        /* Белый цвет звездочек в активном режиме */
+        .ai-toggle-btn.active .material-symbols-outlined {
+            color: #ffffff;
         }
 
         .ai-toggle-btn.active:hover {
@@ -219,7 +227,7 @@
             margin-right: 0; 
             margin-bottom: 5px;
             color: var(--brand-color, #5f6368);
-            transition: transform 0.25s ease;
+            transition: transform 0.25s ease, color 0.2s ease;
         }
 
         .search-box .material-symbols-outlined {
