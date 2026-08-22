@@ -221,14 +221,6 @@
             color: var(--brand-color, #5f6368);
             transition: transform 0.25s ease;
         }
-        .material-symbols-outlined-search {
-            font-family: 'Material Symbols Outlined' !important;
-            font-size: 26px;
-            margin-right: 0; 
-            margin-bottom: 5px;
-            color: var(--brand-color, #5f6368);
-            transition: transform 0.25s ease;
-        }
 
         .search-box .material-symbols-outlined {
             font-size: 22px;
@@ -291,7 +283,7 @@
     <div class="search-container">
         <form id="searchForm" class="search-box" action="https://www.google.com/search" method="GET" target="_blank">
             <button type="button" id="aiToggleBtn" class="ai-toggle-btn" title="Переключить: Режим ИИ Google" onclick="toggleAIMode()">
-                <span class="material-symbols-outlined-search">auto_awesome</span>
+                <span class="material-symbols-outlined">auto_awesome</span>
             </button>
             <input type="text" name="q" id="searchInput" class="search-input" placeholder="Поиск в Google..." autofocus autocomplete="off" required>
             
@@ -301,7 +293,7 @@
             <input type="hidden" name="ntc" id="ntcParam" value="1" disabled>
 
             <button type="submit" class="search-btn" title="Искать">
-                <span class="material-symbols-outlined-search">search</span>
+                <span class="material-symbols-outlined">search</span>
             </button>
         </form>
     </div>
